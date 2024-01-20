@@ -1,0 +1,24 @@
+{% load my_tags %}
+
+<div class="col-4">
+    <div class="card mb-4 box-shadow">
+        <div class="card-header">
+            <h4 class="my-0 font-weight-normal">{{ object.title }}</h4>
+        </div>
+        <div class="card-body">
+            {{ object.date_begin }}
+            <img src="{% mymedia_tag object.img %}" width="300" height="300">
+        </div>
+        <div class="card-footer">
+            <div>
+                <a class="p-2 btn btn-outline-primary" href="{% url 'blog:blog' object.pk %}">Просмотр</a>
+                {% if perms.blog.change_blog %}
+                <a class="p-2 btn btn-outline-primary" href="{% url 'blog:update_blog' object.pk %}">Редактировать</a>
+                {% endif %}
+                {% if perms.blog.delete_blog %}
+                <a class="p-2 btn btn-outline-primary" href="{% url 'blog:delete_blog' object.pk %}">Удалить</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+{% extends 'users/base.html'  %}
+{% block content %}
+
+<div class="col-12 mb-5">
+    {% if user.is_authenticated %}
+        <a class="btn btn-primary" href="{% url 'service:create_mailing' %}">Создать рассылку</a>
+        <a class="btn btn-primary" href="{% url 'service:create_massage' %}">Создать сообщение</a>
+    {% endif %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">{{ object.name }}</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Название</th>
+                            <th>Периодичность</th>
+                            <th>Тема</th>
+                            <th>Начало</th>
+                            <th>Статус</th>
+                            <th>Управление</th>
+                        </tr>
+                        {% for object in object_list %}
+                            <tr>
+                                <td>
+                                    <a
+                                            href="{% url 'service:mailing_view' object.pk %}">
+                                            {{ object.name }}
+                                    </a>
+                                </td>
+                                <td>{{ object.get_periodic_display }}</td>
+                                <td>{{ object.massage }}</td>
+                                <td>{{ object.start }}</td>
+                                <td>{{ object.get_status_display }}</td>
+                                <td>
+                                    {% if object.author == user or perms.service.change_mailing %}
+                                    <a
+                                            class="p-2 btn btn-outline-primary"
+                                            href="{% url 'service:update_mailing' object.pk %}">
+                                            Редактировать
+                                    </a>
+                                    {% endif %}
+                                    {% if object.author == user or perms.service.delete_mailing %}
+                                    <a
+                                            class="p-2 btn btn-outline-primary"
+                                            href="{% url 'service:delete_mailing' object.pk %}">
+                                            Удалить
+                                    </a>
+                                    {% endif %}
+                                    {% if object.author == user or user.is_staff %}
+                                        {% if object.is_active%}
+                                        <a
+                                                class="p-2 btn btn-outline-danger"
+                                                href="{% url 'service:activate_mailing' object.pk %}">
+                                                Откл
+                                        </a>
+                                        {% else %}
+                                        <a
+                                                class="p-2 btn btn-outline-success"
+                                                href="{% url 'service:activate_mailing' object.pk %}">
+                                                Вкл
+                                        </a>
+                                        {% endif %}
+                                    {% endif %}
+                                    {% csrf_token %}
+                                    {% if object.author == user or user.is_superuser%}
+                                        {% if object.status == 'RY' %}
+                                        <a
+                                                class="p-2 btn btn-outline-success"
+                                                href="{% url 'service:start_mailing' object.pk %}">
+                                                Старт
+                                        </a>
+                                        {% else %}
+                                        <a
+                                                class="p-2 btn btn-outline-secondary"
+                                                href="{% url 'service:mailing' %}">
+                                                Старт
+                                        </a>
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

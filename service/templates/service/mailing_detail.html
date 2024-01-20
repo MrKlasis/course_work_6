@@ -1,0 +1,28 @@
+{% extends 'users/base.html' %}
+{% block content %}
+    <div class="col-6" >
+        <div class="card">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><h3 align="center">{{object.name}}</h3></li>
+                <li class="list-group-item"><h5>Тема: </h5>{{object.massage}}</li>
+                <li class="list-group-item"><h5>Периодичность: </h5>{{object.get_periodic_display}}</li>
+                <li class="list-group-item"><h5>Время старта: </h5>{{object.start}}</li>
+                <li class="list-group-item"><h5>Время завершения: </h5>{{object.stop}}</li>
+                <li class="list-group-item"><h5>Статус: </h5>{{object.get_status_display}}</li>
+                <li class="list-group-item"><h5>Клиенты: </h5>
+                    {% for client in object.clients.all %}
+                        {{client}} ,
+                    {% endfor %}
+                </li>
+                <li class="list-group-item"><h5>Автор: </h5>{{object.author}}</li>
+                <li class="list-group-item"><h5>Активность: </h5>
+                    {% if object.is_active == True %}
+                    Активна
+                    {% else %}
+                    Не активна
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

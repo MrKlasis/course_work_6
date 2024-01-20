@@ -1,0 +1,15 @@
+{% extends 'users/base.html' %}
+{% load my_tags %}
+{% block content %}
+    <div class="col-12 mb-5">
+        {% if perms.blog.add_blog %}
+            <a class="btn btn-outline-primary" href="{% url 'blog:create_blog' %}">Создать</a>
+        {% endif %}
+    </div>
+    <div class="row text-center">
+        {% for object in object_list %}
+            {% include 'users/includes/inc_blog.html' %}
+        {% endfor %}
+        <div>
+    </div>
+{% endblock %}

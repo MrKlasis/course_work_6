@@ -1,0 +1,60 @@
+{% extends 'users/base.html'  %}
+{% block content %}
+
+<div class="col-12 mb-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Почта</th>
+                            <th>Фамилия</th>
+                            <th>Имя</th>
+                            <th>Верификация почты</th>
+                            <th>Управление</th>
+                        </tr>
+                        {% for object in object_list %}
+                        {% if not object.is_staff %}
+                        <tr>
+                            <td>{{ object.email }}</td>
+                            <td>{{ object.first_name }}</td>
+                            <td>{{ object.last_name }}</td>
+                            <td>
+                                {% if object.email_verify %}
+                                Верефицирован
+                                {% else %}
+                                Не верефицирован
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% csrf_token %}
+                                {% if perms.users.set_is_active %}
+                                    {% if object.is_active %}
+                                    <a
+                                            class="p-2 btn btn-outline-danger"
+                                            href="{% url 'users:users_active' object.pk %}">
+                                        Заблокировать
+                                    </a>
+                                    {% else %}
+                                    <a
+                                            class="p-2 btn btn-outline-success"
+                                            href="{% url 'users:users_active' object.pk %}">
+                                        Активировать
+                                    </a>
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

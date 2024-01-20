@@ -1,0 +1,35 @@
+{% extends 'users/base.html' %}
+{% load my_tags %}
+{% block content %}
+    <div class="container">
+        <div class="row text-start">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-body">
+                        <img src="/media/{{object.img}}" width="500">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="card mb-4 box-shadow">
+                    <h4>Содержимое</h4>
+                    {{ object.text }}
+                </div>
+                <div>
+                    Просмотров:
+                    {{ object.count_views }}
+                </div>
+            </div>
+            <div>
+                Дата публикации: {{ object.date_begin }}
+                {% if perms.blog.change_blog %}
+                    <a class="p-2 btn btn-outline-primary" href="{% url 'blog:update_blog' object.pk %}">Редактировать</a>
+                {% endif %}
+                {% if perms.blog.delete_blog %}
+                    <a class="p-2 btn btn-outline-primary" href="{% url 'blog:delete_blog' object.pk %}">Удалить</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

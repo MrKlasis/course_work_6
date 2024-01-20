@@ -1,0 +1,53 @@
+{% extends 'users/base.html'  %}
+{% block content %}
+
+<div class="col-12 mb-5">
+    {% if user.is_authenticated %}
+        <a class="btn btn-primary" href="{% url 'service:add_client' %}">Добавить клиента</a>
+    {% endif %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">{{ object.name }}</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Имя</th>
+                            <th>Почта</th>
+                            <th>Комментарий</th>
+                            <th>Управление</th>
+                        </tr>
+                        {% for object in object_list %}
+                            <tr>
+                                <td>
+                                    <a
+                                            href="{% url 'service:client_view' object.pk %}">
+                                            {{ object.name }}
+                                    </a>
+                                </td>
+                                <td>{{ object.email }}</td>
+                                <td>{{ object.comment }}</td>
+                                <td>
+                                    <a
+                                            class="p-2 btn btn-outline-primary"
+                                            href="{% url 'service:update_client' object.pk %}">
+                                            Редактировать
+                                    </a>
+                                    <a
+                                            class="p-2 btn btn-outline-primary"
+                                            href="{% url 'service:delete_client' object.pk %}">
+                                            Удалить
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+
+    <div class="col-12">
+        <div class="card" align="center">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><h5>Общее количество рассылок: </h5>{{mailing_count}}</li>
+                <li class="list-group-item"><h5>Количество активных рассылок: </h5>{{mailing_active_count}}</li>
+                <li class="list-group-item"><h5>Количество уникальных клиентов для рассылок: </h5>{{client_count}}</li>
+            </ul>
+        </div>
+        <div class="row" align="center">
+            {% for object in blog_random_post %}
+                {% include 'users/includes/inc_blog.html' %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
