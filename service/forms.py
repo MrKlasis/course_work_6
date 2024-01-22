@@ -8,7 +8,7 @@ class MailingForm(forms.ModelForm):
         # получаем пользователя и с целью избежания ошибок, удаляем
         user = kwargs.pop('user')
         super().__init__(*args, **kwargs)
-        # фильтруем сообщения и клиентов по пользователю если он не является персоналом
+        # фильтруем сообщения и клиентов по пользователю если он не является частью персонала
         if not user.is_staff:
             # self.fields['message'].queryset = Message.objects.filter(owner=self.user)
             self.fields['clients'].queryset = Client.objects.filter(author=user)

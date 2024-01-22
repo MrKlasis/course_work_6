@@ -86,6 +86,3 @@ def activate(request, token):
     user.email_verify = True
     user.save()
     return render(request, 'users/activate.html')
-
-
-

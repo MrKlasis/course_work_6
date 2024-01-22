@@ -24,7 +24,7 @@ NO_ACTIVE = 'NA'
 STATUS_CHOICES = [
     (CREATED, 'Создание'),
     (LAUNCHED, 'Запущена'),
-    (COMPLETED, 'Завершина'),
+    (COMPLETED, 'Завершена'),
     (READY, 'Ждет отправки'),
     (NO_ACTIVE, 'Не активна'),
 ]
